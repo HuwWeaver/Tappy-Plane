@@ -16,12 +16,11 @@ public:
 
 protected:
     Texture2D texture{};
-    Rectangle spriteRect{};
+    Rectangle spriteRect{}, collisionRect{};;
     Vector2 pos{};
 
     int speed{-200};
-    float pad{50};
-    Rectangle collisionRect{};
+    float collisionPadding{10};
     bool  active{false};
 };
 

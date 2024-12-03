@@ -59,4 +59,7 @@ void Character::tick(float deltaTime, int winHeight)
 
     collisionRect = {pos.x, pos.y, spriteRect.width, spriteRect.height};
     DrawTextureRec(texture, spriteRect, pos, WHITE);
+
+    //DEBUG RECTANGLE
+    DrawRectangleLines(pos.x, pos.y, spriteRect.width, spriteRect.height, RED);
 }

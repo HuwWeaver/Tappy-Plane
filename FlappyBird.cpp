@@ -94,6 +94,15 @@ int main()
                 gameOver = true;
             }
 
+            //Check obstacle collisions
+            for (Obstacle obstacle : obstaclePool)
+            {          
+                if(CheckCollisionRecs(obstacle.GetCollisionRect(), character.GetCollisionRect()))
+                {
+                    gameOver = true;
+                }
+            }
+
                 
         }
 

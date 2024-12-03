@@ -8,7 +8,7 @@ Obstacle::Obstacle(Texture2D sprite)
 
 void Obstacle::SetInitialPosition(int winWidth, int winHeight)
 {
-    pos = {static_cast<float>(winWidth + 200), static_cast<float>((winHeight - texture.height))};
+    pos = {static_cast<float>(winWidth + 200), static_cast<float>((winHeight - texture.height + 10))};
 }
 
 void Obstacle::tick(float deltaTime)
@@ -16,6 +16,9 @@ void Obstacle::tick(float deltaTime)
     pos.x += speed * deltaTime;
     if(pos.x <= -100) SetActive(false);
 
-    collisionRect = {pos.x + pad, pos.y + pad, spriteRect.width - 2*pad, spriteRect.height - 2*pad};
+    collisionRect = {pos.x + collisionPadding, pos.y + collisionPadding, spriteRect.width - 2*collisionPadding, spriteRect.height - 2*collisionPadding};
     DrawTextureRec(texture, spriteRect, pos, WHITE);
+
+    //DEBUG RECTANGLE
+    DrawRectangleLines(pos.x + collisionPadding, pos.y + collisionPadding, spriteRect.width - 2*collisionPadding, spriteRect.height - 2*collisionPadding, RED);
 }
