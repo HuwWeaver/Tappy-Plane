@@ -17,6 +17,12 @@ bool Character::IsOnGround(int winHeight)
     return pos.y >= winHeight - spriteRect.height;
 }
 
+void Character::Reset(int winWidth, int winHeight)
+{
+    pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
+    yVelocity = 0;
+}
+
 void Character::tick(float deltaTime, int winHeight)
 {
     if (IsOnGround(winHeight))

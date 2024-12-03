@@ -36,7 +36,6 @@ int main()
     bool gameOver{false};
 
     Background background{"textures/background.png", 25};
-    Background foreground{"textures/groundGrass.png", 50, windowDimensions[1] - 60};
 
     SetTargetFPS(60);
 
@@ -54,6 +53,12 @@ int main()
         {
             //Lose the game
             DrawText("Game Over!", windowDimensions[0]/4, windowDimensions[1]/2, 50, BLACK);
+
+            if(IsKeyPressed(KEY_R))
+            {
+                character.Reset(windowDimensions[0], windowDimensions[1]);
+                gameOver = false;
+            }
         }
         else
         {
@@ -80,8 +85,6 @@ int main()
             {
                 if(obstaclePool[i].GetActive()) obstaclePool[i].tick(dt);            
             } 
-            
-            foreground.tick(dt);
 
             character.tick(dt, windowDimensions[1]);
 

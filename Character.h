@@ -11,6 +11,8 @@ public:
     bool IsOnGround(int winHeight);
     void tick(float deltaTime, int winHeight);
     Rectangle GetCollisionRect() {return collisionRect;};
+    void Reset(int winWidth, int winHeight);
+
 
 protected:
     Texture2D texture{};
