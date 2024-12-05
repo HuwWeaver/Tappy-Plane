@@ -96,15 +96,14 @@ int main()
             }
 
             //Check obstacle collisions
-            //for (Obstacle obstacle : obstaclePool)
-            //{          
-                //FUNCTION NOT IN VERSION OF RAYLIB
-
-                //if(CheckCollisionCircleLine(obstacle.GetCollisionRect(), character.GetCollisionRect()))
-                //{
-                //    gameOver = true;
-                //}
-           //}               
+            for (Obstacle obstacle : obstaclePool)
+            {          
+                if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
+                    obstacle.GetCollisionLine().point1, obstacle.GetCollisionLine().point2))
+                {
+                    gameOver = true;
+                }
+           }               
         }
 
         EndDrawing();
