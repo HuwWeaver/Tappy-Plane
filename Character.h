@@ -2,6 +2,7 @@
 #define CHARACTER_H
 
 #include "raylib.h"
+#include "Structs.h"
 
 class Character
 {
@@ -10,14 +11,14 @@ public:
     ~Character();
     bool IsOnGround(int winHeight);
     void tick(float deltaTime, int winHeight);
-    Rectangle GetCollisionRect() {return collisionRect;};
+    Circle GetCollisionCircle() {return collisionCircle;};
     void Reset(int winWidth, int winHeight);
-
 
 protected:
     Texture2D texture{};
-    Rectangle spriteRect{}, collisionRect{};
+    Rectangle spriteRect{};
     Vector2 pos{};
+    Circle collisionCircle{};
 
     int frame{0};
     int maxFrame{3};

@@ -13,12 +13,16 @@ void Obstacle::SetInitialPosition(int winWidth, int winHeight)
 
 void Obstacle::tick(float deltaTime)
 {
-    pos.x += speed * deltaTime;
-    if(pos.x <= -100) SetActive(false);
+    if(active)
+    {
+        pos.x += speed * deltaTime;
+        if(pos.x <= -100) SetActive(false);
 
-    collisionRect = {pos.x + collisionPadding, pos.y + collisionPadding, spriteRect.width - 2*collisionPadding, spriteRect.height - 2*collisionPadding};
-    DrawTextureRec(texture, spriteRect, pos, WHITE);
+        collisionLine = {{pos.x + spriteRect.width/2.0f + 5, pos.y}, {pos.x, pos.y + spriteRect.height}};
 
-    //DEBUG RECTANGLE
-    DrawRectangleLines(pos.x + collisionPadding, pos.y + collisionPadding, spriteRect.width - 2*collisionPadding, spriteRect.height - 2*collisionPadding, RED);
+        DrawTextureRec(texture, spriteRect, pos, WHITE);
+
+        //DEBUG Line
+        DrawLine(collisionLine.point1.x, collisionLine.point1.y, collisionLine.point2.x, collisionLine.point2.y, BLUE);
+    }
 }

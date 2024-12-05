@@ -2,6 +2,7 @@
 #include "Background.h"
 #include "Character.h"
 #include "Obstacle.h"
+#include "Structs.h"
 
 int main()
 {
@@ -95,15 +96,15 @@ int main()
             }
 
             //Check obstacle collisions
-            for (Obstacle obstacle : obstaclePool)
-            {          
-                if(CheckCollisionRecs(obstacle.GetCollisionRect(), character.GetCollisionRect()))
-                {
-                    gameOver = true;
-                }
-            }
+            //for (Obstacle obstacle : obstaclePool)
+            //{          
+                //FUNCTION NOT IN VERSION OF RAYLIB
 
-                
+                //if(CheckCollisionCircleLine(obstacle.GetCollisionRect(), character.GetCollisionRect()))
+                //{
+                //    gameOver = true;
+                //}
+           //}               
         }
 
         EndDrawing();

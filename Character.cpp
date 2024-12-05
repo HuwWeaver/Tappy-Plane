@@ -5,6 +5,7 @@ Character::Character(int winWidth, int winHeight)
     texture = LoadTexture("textures/Planes/planeRedSpriteSheet.png");
     spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
+    collisionCircle = {Vector2{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 40};
 }
 
 Character::~Character()
@@ -20,6 +21,7 @@ bool Character::IsOnGround(int winHeight)
 void Character::Reset(int winWidth, int winHeight)
 {
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
+    collisionCircle.pos = {pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f};
     yVelocity = 0;
 }
 
@@ -27,12 +29,11 @@ void Character::tick(float deltaTime, int winHeight)
 {
     if (IsOnGround(winHeight))
     {
-        //Rectangle on the floor
         yVelocity = 0;
     }
     else
     {
-        //Rectangle in the air - Apply Gravity
+        //In the air - Apply Gravity
         yVelocity += gravity * deltaTime;
     }
 
@@ -41,7 +42,9 @@ void Character::tick(float deltaTime, int winHeight)
         yVelocity += jumpVel;
     }
 
+    //TODO - Don't like having to update 2 different things, find another way
     pos.y += yVelocity * deltaTime;
+    collisionCircle.pos.y += yVelocity * deltaTime;
 
     //Character Animation
     runningTime += deltaTime;
@@ -57,9 +60,8 @@ void Character::tick(float deltaTime, int winHeight)
         }
     }
 
-    collisionRect = {pos.x, pos.y, spriteRect.width, spriteRect.height};
     DrawTextureRec(texture, spriteRect, pos, WHITE);
 
-    //DEBUG RECTANGLE
-    DrawRectangleLines(pos.x, pos.y, spriteRect.width, spriteRect.height, RED);
+    //DEBUG Circle
+    DrawCircleLines(collisionCircle.pos.x, collisionCircle.pos.y, collisionCircle.radius, BLUE);
 }
