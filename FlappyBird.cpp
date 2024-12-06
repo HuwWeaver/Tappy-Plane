@@ -7,32 +7,24 @@
 int main()
 {
     //Window Dimensions
-    int windowDimensions[2];
-    windowDimensions[0] = 800;
-    windowDimensions[1] = 480;
-    InitWindow(windowDimensions[0], windowDimensions[1], "Flappy Bird!");
+    Vector2 windowDimensions{800, 480};
+    InitWindow(windowDimensions.x, windowDimensions.y, "Flappy Bird!");
 
     Texture2D rock = LoadTexture("textures/rock.png");
     const int objectPoolSize{5};
 
-    Obstacle obstaclePool[objectPoolSize]{
-        Obstacle{rock},
-        Obstacle{rock},
-        Obstacle{rock},
-        Obstacle{rock},
-        Obstacle{rock}
-    };
+    Obstacle obstaclePool[objectPoolSize];
 
-        for(int i =0; i < objectPoolSize; i++)
+    for(int i =0; i < objectPoolSize; i++)
     {
-        obstaclePool[i].SetInitialPosition(windowDimensions[0], windowDimensions[1]);
+        obstaclePool[i].Init(rock, windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
     float runningTime{2.0};
     float obstacleInterval{2.0};
 
-    Character character{windowDimensions[0], windowDimensions[1]};
+    Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
 
     bool gameOver{false};
 
@@ -53,11 +45,11 @@ int main()
         if(gameOver)
         {
             //Lose the game
-            DrawText("Game Over!", windowDimensions[0]/4, windowDimensions[1]/2, 50, BLACK);
+            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2, 50, BLACK);
 
             if(IsKeyPressed(KEY_R))
             {
-                character.Reset(windowDimensions[0], windowDimensions[1]);
+                character.Reset(windowDimensions.x, windowDimensions.y);
                 gameOver = false;
             }
         }
@@ -75,7 +67,7 @@ int main()
                     {
                         //Spawn inactive obstacle and stop searching
                         obstaclePool[i].SetActive(true);
-                        obstaclePool[i].SetInitialPosition(windowDimensions[0], windowDimensions[1]);
+                        obstaclePool[i].SetStartPosition(windowDimensions.x, windowDimensions.y);
                         break;
                     }
                 }
@@ -87,10 +79,10 @@ int main()
                 if(obstaclePool[i].GetActive()) obstaclePool[i].tick(dt);            
             } 
 
-            character.tick(dt, windowDimensions[1]);
+            character.tick(dt, windowDimensions.y);
 
             //Check if character has hit the floor
-            if(character.IsOnGround(windowDimensions[1]))
+            if(character.IsOnGround(windowDimensions.y))
             {
                 gameOver = true;
             }

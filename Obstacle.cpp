@@ -1,13 +1,20 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(Texture2D sprite)
+Obstacle::Obstacle(){}
+
+void Obstacle::Init(Texture2D sprite, int winWidth, int winHeight)
 {
+    //Assign texture
     texture = sprite;
     spriteRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+    
+    //Set Initial Position
+    SetStartPosition(winWidth, winHeight);
 }
 
-void Obstacle::SetInitialPosition(int winWidth, int winHeight)
+void Obstacle::SetStartPosition(int winWidth, int winHeight)
 {
+    //Set Start Position
     pos = {static_cast<float>(winWidth + 200), static_cast<float>((winHeight - texture.height + 10))};
 }
 
