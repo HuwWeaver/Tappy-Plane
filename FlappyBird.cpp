@@ -15,7 +15,7 @@ int main()
 
     Obstacle obstaclePool[objectPoolSize];
 
-    for(int i =0; i < objectPoolSize; i++)
+    for(int i=0; i < objectPoolSize; i++)
     {
         obstaclePool[i].Init(rock, windowDimensions.x, windowDimensions.y);
     }
@@ -73,7 +73,7 @@ int main()
                 }
             }
 
-            //tick all active nebula obstacles - update animation, position, and collisions
+            //tick all active obstacles - update position and collisions
             for (int i=0; i < objectPoolSize; i++)
             {
                 if(obstaclePool[i].GetActive()) obstaclePool[i].tick(dt);            
