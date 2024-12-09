@@ -10,14 +10,15 @@ int main()
     Vector2 windowDimensions{800, 480};
     InitWindow(windowDimensions.x, windowDimensions.y, "Flappy Bird!");
 
-    Texture2D rock = LoadTexture("textures/rock.png");
+    Texture2D lowerRock = LoadTexture("textures/rock.png");
+    Texture2D upperRock = LoadTexture("textures/rockDown.png");
     const int objectPoolSize{5};
 
     Obstacle obstaclePool[objectPoolSize];
 
     for(int i=0; i < objectPoolSize; i++)
     {
-        obstaclePool[i].Init(rock, windowDimensions.x, windowDimensions.y);
+        obstaclePool[i].Init(lowerRock, upperRock, windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
