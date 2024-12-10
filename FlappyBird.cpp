@@ -1,7 +1,12 @@
+#include <iostream>
+#include <vector>
+#include <memory>
 #include "raylib.h"
 #include "Background.h"
 #include "Character.h"
 #include "Obstacle.h"
+#include "UpperObstacle.h"
+#include "LowerObstacle.h"
 #include "Structs.h"
 
 int main()
@@ -12,13 +17,16 @@ int main()
 
     Texture2D lowerRock = LoadTexture("textures/rock.png");
     Texture2D upperRock = LoadTexture("textures/rockDown.png");
-    const int objectPoolSize{5};
+    const int numEachObstacleType{3};
 
-    Obstacle obstaclePool[objectPoolSize];
+    std::vector<std::unique_ptr<Obstacle>> obstaclePool;
 
-    for(int i=0; i < objectPoolSize; i++)
+    for(int i=0; i < numEachObstacleType; i++)
     {
-        obstaclePool[i].Init(lowerRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.push_back(std::make_unique<LowerObstacle>());
+        obstaclePool.back()->Init(lowerRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.push_back(std::make_unique<UpperObstacle>());
+        obstaclePool.back()->Init(upperRock, windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
@@ -61,23 +69,23 @@ int main()
             {
                 runningTime = 0;
 
-                //find inactive obstacle in pool
-                for (int i=0; i < objectPoolSize; i++)
+                //find inactive obstacles in pool
+                for (auto& obstacle : obstaclePool)
                 {
-                    if(!obstaclePool[i].GetActive())
+                    if(!obstacle->GetActive())
                     {
                         //Spawn inactive obstacle and stop searching
-                        obstaclePool[i].SetActive(true);
-                        obstaclePool[i].SetStartPosition(windowDimensions.x, windowDimensions.y);
+                        obstacle->SetActive(true);
+                        obstacle->SetStartPosition(windowDimensions.x, windowDimensions.y);
                         break;
                     }
                 }
             }
 
             //tick all active obstacles - update position and collisions
-            for (int i=0; i < objectPoolSize; i++)
+            for (auto& obstacle : obstaclePool)
             {
-                if(obstaclePool[i].GetActive()) obstaclePool[i].tick(dt);            
+                if(obstacle->GetActive()) obstacle->tick(dt);            
             } 
 
             character.tick(dt, windowDimensions.y);
@@ -89,10 +97,10 @@ int main()
             }
 
             //Check obstacle collisions
-            for (Obstacle obstacle : obstaclePool)
-            {          
+            for (auto& obstacle : obstaclePool)
+            {                        
                 if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
-                    obstacle.GetCollisionLine().point1, obstacle.GetCollisionLine().point2))
+                    obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
                 {
                     gameOver = true;
                 }
@@ -101,6 +109,10 @@ int main()
 
         EndDrawing();
     }
+
+    //Unload all textures
+    UnloadTexture(lowerRock);
+    UnloadTexture(upperRock);
 
     CloseWindow();
 }
