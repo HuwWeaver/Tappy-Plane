@@ -13,9 +13,12 @@ Character::~Character()
     UnloadTexture(texture);
 }
 
-bool Character::IsOnGround(int winHeight)
+bool Character::OutOfBounds(int winHeight)
 {
-    return pos.y >= winHeight - spriteRect.height;
+    if(pos.y >= winHeight - spriteRect.height) return true;
+    if(pos.y <= -10) return true;
+    
+    return false;
 }
 
 void Character::Reset(int winWidth, int winHeight)
@@ -27,15 +30,8 @@ void Character::Reset(int winWidth, int winHeight)
 
 void Character::tick(float deltaTime, int winHeight)
 {
-    if (IsOnGround(winHeight))
-    {
-        yVelocity = 0;
-    }
-    else
-    {
-        //In the air - Apply Gravity
-        yVelocity += gravity * deltaTime;
-    }
+    //In the air - Apply Gravity
+    yVelocity += gravity * deltaTime;
 
     if(IsKeyPressed(KEY_SPACE))
     {

@@ -9,7 +9,7 @@ class Character
 public:
     Character(int winWidth, int winHeight);
     ~Character();
-    bool IsOnGround(int winHeight);
+    bool OutOfBounds(int winHeight);
     void tick(float deltaTime, int winHeight);
     Circle GetCollisionCircle() {return collisionCircle;};
     void Reset(int winWidth, int winHeight);

@@ -18,7 +18,7 @@ int main()
 
     for(int i=0; i < objectPoolSize; i++)
     {
-        obstaclePool[i].Init(lowerRock, upperRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool[i].Init(lowerRock, windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
@@ -83,7 +83,7 @@ int main()
             character.tick(dt, windowDimensions.y);
 
             //Check if character has hit the floor
-            if(character.IsOnGround(windowDimensions.y))
+            if(character.OutOfBounds(windowDimensions.y))
             {
                 gameOver = true;
             }

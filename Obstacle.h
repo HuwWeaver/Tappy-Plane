@@ -8,18 +8,18 @@ class Obstacle
 {
 public:
     Obstacle();
-    void Init(Texture2D lowerSprite, Texture2D upperSprite, int winWidth, int winHeight);
+    void Init(Texture2D sprite, int winWidth, int winHeight);
     void SetStartPosition(int winWidth, int winHeight);
     virtual void tick(float deltaTime);
-    Line GetCollisionLine() {return lowerCollisionLine;};
+    Line GetCollisionLine() {return collisionLine;};
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
 
 protected:
-    Texture2D lowerTexture{}, upperTexture{};
+    Texture2D texture{};
     Rectangle spriteRect{};
-    float xPos{}, lowerSpritePosY{}, upperSpritePosY{};
-    Line lowerCollisionLine{}, upperCollisionLine{};
+    Vector2 pos{};
+    Line collisionLine{};
 
     int speed{-200};
     float collisionPadding{10};
