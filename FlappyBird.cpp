@@ -31,7 +31,7 @@ int main()
 
     //obstacle timer
     float runningTime{2.0};
-    float obstacleInterval{2.0};
+    float obstacleInterval{2.0}, minInterval{1.0}, maxInterval{2.5};
 
     Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
 
@@ -68,6 +68,7 @@ int main()
             if(runningTime >= obstacleInterval)
             {
                 runningTime = 0;
+                obstacleInterval = GetRandomValue(minInterval, maxInterval);
 
                 std::vector<Obstacle*> inactivePool;
 
