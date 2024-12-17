@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "Structs.h"
+#include "Particle.h"
 
 class Character
 {

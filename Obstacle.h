@@ -25,7 +25,7 @@ protected:
 
     int speed{-200};
     float collisionPadding{10};
-    bool  active{false};
+    bool active{false};
 };
 
 #endif
