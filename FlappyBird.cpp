@@ -58,6 +58,10 @@ int main()
 
             if(IsKeyPressed(KEY_R))
             {
+                for (auto& obstacle : obstaclePool)
+                {
+                    obstacle->Reset(windowDimensions.x, windowDimensions.y);            
+                }
                 character.Reset(windowDimensions.x, windowDimensions.y);
                 gameOver = false;
             }
@@ -106,13 +110,16 @@ int main()
                 gameOver = true;
             }
 
-            //Check obstacle collisions
+            //Check active obstacle collisions
             for (auto& obstacle : obstaclePool)
             {                        
-                if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
-                    obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
+                if(obstacle->GetActive())
                 {
-                    gameOver = true;
+                    if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
+                        obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
+                    {
+                        gameOver = true;
+                    }
                 }
            }               
         }

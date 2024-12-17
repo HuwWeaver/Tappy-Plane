@@ -15,6 +15,7 @@ public:
     Line GetCollisionLine() {return collisionLine;};
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
+    void Reset(int winWidth, int winHeight);
 
 protected:
     Texture2D texture{};

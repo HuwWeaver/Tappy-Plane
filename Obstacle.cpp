@@ -18,6 +18,12 @@ void Obstacle::SetStartPosition(int winWidth, int winHeight)
     pos.x = static_cast<float>(winWidth + 200);
 }
 
+void Obstacle::Reset(int winWidth, int winHeight)
+{
+    SetActive(false);
+    SetStartPosition(winWidth, winHeight);
+}
+
 void Obstacle::tick(float deltaTime)
 {
     if(active)
