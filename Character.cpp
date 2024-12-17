@@ -38,7 +38,6 @@ void Character::tick(float deltaTime, int winHeight)
         yVelocity += jumpVel;
     }
 
-    //TODO - Don't like having to update 2 different things, find another way
     pos.y += yVelocity * deltaTime;
     collisionCircle.pos.y += yVelocity * deltaTime;
 

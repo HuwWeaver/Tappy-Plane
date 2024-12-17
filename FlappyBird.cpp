@@ -15,8 +15,7 @@ int main()
     Vector2 windowDimensions{800, 480};
     InitWindow(windowDimensions.x, windowDimensions.y, "Flappy Bird!");
 
-    Texture2D lowerRock = LoadTexture("textures/rock.png");
-    Texture2D upperRock = LoadTexture("textures/rockDown.png");
+    //create obstacle pool of equal amount upper and lower obstacles
     const int numEachObstacleType{3};
 
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
@@ -24,9 +23,9 @@ int main()
     for(int i=0; i < numEachObstacleType; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
-        obstaclePool.back()->Init(lowerRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init("textures/rock.png", windowDimensions.x, windowDimensions.y);
         obstaclePool.push_back(std::make_unique<UpperObstacle>());
-        obstaclePool.back()->Init(upperRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init("textures/rockDown.png", windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
@@ -126,10 +125,6 @@ int main()
 
         EndDrawing();
     }
-
-    //Unload all textures
-    UnloadTexture(lowerRock);
-    UnloadTexture(upperRock);
 
     CloseWindow();
 }
