@@ -69,17 +69,26 @@ int main()
             {
                 runningTime = 0;
 
+                std::vector<Obstacle*> inactivePool;
+
                 //find inactive obstacles in pool
                 for (auto& obstacle : obstaclePool)
                 {
                     if(!obstacle->GetActive())
-                    {
-                        //Spawn inactive obstacle and stop searching
-                        obstacle->SetActive(true);
-                        obstacle->SetStartPosition(windowDimensions.x, windowDimensions.y);
-                        break;
+                    {                      
+                        //add to pool of inactive obstacles
+                        inactivePool.push_back(obstacle.get());
                     }
                 }
+
+                //pick random obstacle from inactive pool and activate
+                if (!inactivePool.empty())
+                {
+                    int obs = GetRandomValue(0, inactivePool.size() - 1);
+                    inactivePool.at(obs)->SetActive(true);
+                    inactivePool.at(obs)->SetStartPosition(windowDimensions.x, windowDimensions.y);
+                }
+
             }
 
             //tick all active obstacles - update position and collisions
