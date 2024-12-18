@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 #include "Structs.h"
-#include "Particle.h"
+#include "SmokePuff.h"
 
 class Character
 {
@@ -29,6 +29,8 @@ protected:
     const int jumpVel{-600};
     int yVelocity{0};
     const int gravity{1000};
+
+    SmokePuff particlePool[5];
 };
 
 #endif

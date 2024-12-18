@@ -6,6 +6,11 @@ Character::Character(int winWidth, int winHeight)
     spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
     collisionCircle = {Vector2{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
+
+    for (auto& particle : particlePool)
+    {
+        particle.Init("textures/puffSmall.png", pos);
+    }
 }
 
 Character::~Character()
@@ -23,6 +28,11 @@ bool Character::OutOfBounds(int winHeight)
 
 void Character::Reset(int winWidth, int winHeight)
 {
+    for (auto& particle : particlePool)
+    {
+        particle.Reset();
+    }
+    
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
     collisionCircle.pos = {pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f};
     yVelocity = 0;
@@ -36,6 +46,16 @@ void Character::tick(float deltaTime, int winHeight)
     if(IsKeyPressed(KEY_SPACE))
     {
         yVelocity += jumpVel;
+
+        for (auto& particle : particlePool)
+        {
+            if(!particle.GetActive())
+            {
+                particle.SetActive(true);
+                particle.SetPosition(pos);
+                break;  
+            }
+        }
     }
 
     pos.y += yVelocity * deltaTime;
@@ -53,6 +73,12 @@ void Character::tick(float deltaTime, int winHeight)
         {
             frame = 0;
         }
+    }
+
+    //Tick Particles
+    for (auto& particle : particlePool)
+    {
+        if(particle.GetActive()) particle.tick(deltaTime);
     }
 
     DrawTextureRec(texture, spriteRect, pos, WHITE);
