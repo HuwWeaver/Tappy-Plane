@@ -84,5 +84,5 @@ void Character::tick(float deltaTime, int winHeight)
     DrawTextureRec(texture, spriteRect, pos, WHITE);
 
     //DEBUG Circle
-    DrawCircleLines(collisionCircle.pos.x, collisionCircle.pos.y, collisionCircle.radius, BLUE);
+    //DrawCircleLines(collisionCircle.pos.x, collisionCircle.pos.y, collisionCircle.radius, BLUE);
 }
