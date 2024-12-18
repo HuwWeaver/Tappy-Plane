@@ -1,16 +1,19 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#ifndef SMOKE_PUFF_H
+#define SMOKE_PUFF_H
 
 #include "raylib.h"
 
-class Particle
+class SmokePuff
 {
 public:
-    Particle(const char *textureFilePath, Vector2 startPos);
-    ~Particle();
+    SmokePuff();
+    ~SmokePuff();
+    void Init(const char *textureFilePath, Vector2 startPos);
     void tick(float deltaTime);
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
+    void SetPosition(Vector2 newPos) {pos = newPos;};
+    void Reset() {SetActive(false);};
 
 protected:
     Texture2D texture{};
