@@ -26,7 +26,7 @@ protected:
     float updateTime{1.0/12.0};
     float runningTime{0.0};
 
-    const int jumpVel{-600};
+    const int jumpVel{-500};
     int yVelocity{0};
     const int gravity{1000};
 
