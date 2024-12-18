@@ -17,7 +17,8 @@ void SmokePuff::tick(float deltaTime)
 {
     if(active)
     {
-        pos.x += speed * deltaTime;
+        pos.x += xSpeed * deltaTime;
+        pos.y += ySpeed * deltaTime;
         if(pos.x <= -10) SetActive(false);
 
         DrawTextureEx(texture, pos, 0.0, 1.0, GRAY);

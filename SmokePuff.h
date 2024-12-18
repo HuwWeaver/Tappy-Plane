@@ -18,7 +18,7 @@ public:
 protected:
     Texture2D texture{};
     Vector2 pos{};
-    int speed{-200};
+    int xSpeed{-200}, ySpeed{-10};
     bool active{false};
 };
 
