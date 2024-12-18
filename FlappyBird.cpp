@@ -112,13 +112,10 @@ int main()
             //Check active obstacle collisions
             for (auto& obstacle : obstaclePool)
             {                        
-                if(obstacle->GetActive())
+                if(obstacle->GetActive() && CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
+                    obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
                 {
-                    if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
-                        obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
-                    {
-                        gameOver = true;
-                    }
+                    gameOver = true;
                 }
            }               
         }
