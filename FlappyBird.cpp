@@ -117,7 +117,7 @@ int main()
                 {
                     gameOver = true;
                 }
-           }               
+            }               
         }
 
         EndDrawing();

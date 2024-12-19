@@ -13,12 +13,13 @@ public:
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
     void SetPosition(Vector2 newPos) {pos = newPos;};
-    void Reset() {SetActive(false);};
+    void Reset();
 
 protected:
     Texture2D texture{};
     Vector2 pos{};
-    int xSpeed{-200}, ySpeed{-10};
+    float opacity{255.0};
+    int xSpeed{-200}, ySpeed{-10}, fadeSpeed{100};
     bool active{false};
 };
 

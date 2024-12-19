@@ -21,6 +21,15 @@ void SmokePuff::tick(float deltaTime)
         pos.y += ySpeed * deltaTime;
         if(pos.x <= -10) SetActive(false);
 
-        DrawTextureEx(texture, pos, 0.0, 1.0, GRAY);
+        opacity -= fadeSpeed * deltaTime;
+        if (opacity <= 0) opacity = 0;
+
+        DrawTextureEx(texture, pos, 0.0, 1.0, {130, 130, 130, static_cast<unsigned char>(opacity)});
     }
+}
+
+void SmokePuff::Reset()
+{
+    opacity = 255.0;
+    SetActive(false);
 }

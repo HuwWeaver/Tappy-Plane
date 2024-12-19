@@ -51,6 +51,7 @@ void Character::tick(float deltaTime, int winHeight)
         {
             if(!particle.GetActive())
             {
+                particle.Reset();
                 particle.SetActive(true);
                 particle.SetPosition(pos);
                 break;  
