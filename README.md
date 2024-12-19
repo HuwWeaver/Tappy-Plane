@@ -4,4 +4,4 @@ A game to get me back into the swing of programming and game dev after a bit of 
 
 Raylib required to compile code, download here: https://www.raylib.com
 
-Use Space Bar to jump the plan upwards.
+Use Space Bar to jump the plane upwards.
