@@ -13,7 +13,7 @@ int main()
 {
     //Window Dimensions
     Vector2 windowDimensions{800, 480};
-    InitWindow(windowDimensions.x, windowDimensions.y, "Flappy Bird!");
+    InitWindow(windowDimensions.x, windowDimensions.y, "Tappy Plane!");
 
     //create obstacle pool of equal amount upper and lower obstacles
     const int numEachObstacleType{3};
