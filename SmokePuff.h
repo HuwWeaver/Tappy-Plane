@@ -18,8 +18,8 @@ public:
 protected:
     Texture2D texture{};
     Vector2 pos{};
-    float opacity{255.0};
-    int xSpeed{-200}, ySpeed{-10}, fadeSpeed{100};
+    float colorLerpFactor{1.0},  fadeSpeed{0.8};
+    int xSpeed{-200}, ySpeed{-10};
     bool active{false};
 };
 
