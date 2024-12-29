@@ -14,6 +14,7 @@ public:
     void tick(float deltaTime, int winHeight);
     Circle GetCollisionCircle() {return collisionCircle;};
     void Reset(int winWidth, int winHeight);
+    Vector2 GetPosition(){return pos;};
 
 protected:
     Texture2D texture{};

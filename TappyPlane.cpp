@@ -37,7 +37,8 @@ int main()
     Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
 
     bool gameOver{false};
-    float timeScore{0.0};
+    float timeScore{0.0}, totalScore{0.0};
+    int obstacleScore{0};
 
     Background background{"textures/background.png", 25};
 
@@ -56,12 +57,20 @@ int main()
         if(gameOver)
         {
             //Lose the game
-            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2 - 25, 50, BLACK);
+            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2 - 70, 60, BLACK);
 
             //Draw Score
-            std::string scoreText = "Score: ";
-            scoreText.append(std::to_string(timeScore), 0, 5);
-            DrawText(scoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 25, 40, BLACK);
+            std::string totalScoreText = "Total Score: ";
+            totalScoreText.append(std::to_string(totalScore), 0, 5);
+            DrawText(totalScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 - 15, 50, BLACK);
+
+            std::string timeScoreText = "Time: ";
+            timeScoreText.append(std::to_string(timeScore), 0, 5);
+            DrawText(timeScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 30, 30, BLACK);
+
+            std::string obstacleScoreText = "Obstacles Passed: ";
+            obstacleScoreText.append(std::to_string(obstacleScore), 0, 5);
+            DrawText(obstacleScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 55, 30, BLACK);
 
             //Reset Game
             if(IsKeyPressed(KEY_R))
@@ -72,6 +81,8 @@ int main()
                 }
                 character.Reset(windowDimensions.x, windowDimensions.y);
                 timeScore = 0.0;
+                totalScore = 0.0;
+                obstacleScore = 0;
                 gameOver = false;
             }
         }
@@ -113,27 +124,33 @@ int main()
 
             character.tick(dt, windowDimensions.y);
 
-            //Draw Score
-            timeScore += dt;
-            std::string scoreText = "Score: ";
-            scoreText.append(std::to_string(timeScore), 0, 5);
-            DrawText(scoreText.c_str(), 5, 5, 30, BLACK);
-
             //Check if character has hit the floor
             if(character.OutOfBounds(windowDimensions.y))
             {
                 gameOver = true;
             }
 
-            //Check active obstacle collisions
+            //Check active obstacle collisions & add to score if passed char
             for (auto& obstacle : obstaclePool)
             {                        
-                if(obstacle->GetActive() && CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
-                    obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
+                if(obstacle->GetActive())
                 {
-                    gameOver = true;
+                    if(obstacle->hasPassedChar(character.GetPosition().x)) obstacleScore++;
+                    
+                    if(CheckCollisionCircleLine(character.GetCollisionCircle().pos, character.GetCollisionCircle().radius, 
+                                                obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
+                    {
+                        gameOver = true;
+                    }
                 }
-            }               
+            }
+
+            //Draw Score
+            timeScore += dt;
+            totalScore = timeScore + obstacleScore;
+            std::string scoreText = "Score: ";
+            scoreText.append(std::to_string(totalScore), 0, 5);
+            DrawText(scoreText.c_str(), 5, 5, 30, BLACK);           
         }
 
         EndDrawing();

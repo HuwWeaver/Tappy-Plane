@@ -16,6 +16,7 @@ public:
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
     void Reset(int winWidth, int winHeight);
+    bool hasPassedChar(float charXPos);
 
 protected:
     Texture2D texture{};
@@ -23,9 +24,9 @@ protected:
     Vector2 pos{};
     Line collisionLine{};
 
-    int speed{-200};
+    int speed{200};
     float collisionPadding{10};
-    bool active{false};
+    bool active{false}, scoreAdded{false};
 };
 
 #endif
