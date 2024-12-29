@@ -21,7 +21,7 @@ int main()
     //create obstacle pool of equal amount upper and lower obstacles
     const int numEachObstacleType{3};
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
-    
+
     for(int i=0; i < numEachObstacleType; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
@@ -77,12 +77,6 @@ int main()
         }
         else
         {
-            //Draw Score
-            timeScore += dt;
-            std::string scoreText = "Score: ";
-            scoreText.append(std::to_string(timeScore), 0, 5);
-            DrawText(scoreText.c_str(), 5, 5, 30, BLACK);
-
             runningTime += dt;
             if(runningTime >= obstacleInterval)
             {
@@ -118,6 +112,12 @@ int main()
             } 
 
             character.tick(dt, windowDimensions.y);
+
+            //Draw Score
+            timeScore += dt;
+            std::string scoreText = "Score: ";
+            scoreText.append(std::to_string(timeScore), 0, 5);
+            DrawText(scoreText.c_str(), 5, 5, 30, BLACK);
 
             //Check if character has hit the floor
             if(character.OutOfBounds(windowDimensions.y))
