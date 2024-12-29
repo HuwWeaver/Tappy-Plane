@@ -1,7 +1,10 @@
-#include <iostream>
+//Standard Libraries
 #include <vector>
 #include <memory>
+#include <string>
+//Raylib
 #include "raylib.h"
+//Custom
 #include "Background.h"
 #include "Character.h"
 #include "Obstacle.h"
@@ -17,9 +20,8 @@ int main()
 
     //create obstacle pool of equal amount upper and lower obstacles
     const int numEachObstacleType{3};
-
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
-
+    
     for(int i=0; i < numEachObstacleType; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
@@ -35,6 +37,7 @@ int main()
     Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
 
     bool gameOver{false};
+    float timeScore{0.0};
 
     Background background{"textures/background.png", 25};
 
@@ -53,8 +56,14 @@ int main()
         if(gameOver)
         {
             //Lose the game
-            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2, 50, BLACK);
+            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2 - 25, 50, BLACK);
 
+            //Draw Score
+            std::string scoreText = "Score: ";
+            scoreText.append(std::to_string(timeScore), 0, 5);
+            DrawText(scoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 25, 40, BLACK);
+
+            //Reset Game
             if(IsKeyPressed(KEY_R))
             {
                 for (auto& obstacle : obstaclePool)
@@ -62,11 +71,18 @@ int main()
                     obstacle->Reset(windowDimensions.x, windowDimensions.y);            
                 }
                 character.Reset(windowDimensions.x, windowDimensions.y);
+                timeScore = 0.0;
                 gameOver = false;
             }
         }
         else
         {
+            //Draw Score
+            timeScore += dt;
+            std::string scoreText = "Score: ";
+            scoreText.append(std::to_string(timeScore), 0, 5);
+            DrawText(scoreText.c_str(), 5, 5, 30, BLACK);
+
             runningTime += dt;
             if(runningTime >= obstacleInterval)
             {
