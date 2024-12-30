@@ -1,17 +1,19 @@
 #include "Character.h"
 
-Character::Character(int winWidth, int winHeight)
+Character::Character(Vector2 winSize)
 {
+    windowDimensions = winSize;
+    
     texture = LoadTexture("textures/Planes/planeRedSpriteSheet.png");
-    spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};
-    pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
+    spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};   
+    pos = {windowDimensions.x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions.y/3.0f};
     collisionCircle = {{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
 
     smokePuffTexture = LoadTexture("textures/puffSmall.png");
 
     for (auto& puff : smokePuffPool)
     {
-        puff.Init(smokePuffTexture, pos);
+        puff.Init(smokePuffTexture);
     }
 }
 
@@ -29,14 +31,14 @@ bool Character::OutOfBounds(int winHeight)
     return false;
 }
 
-void Character::Reset(int winWidth, int winHeight)
+void Character::Reset()
 {
     for (auto& puff : smokePuffPool)
     {
         puff.Reset();
     }
     
-    pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
+    pos = {windowDimensions.x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions.y/3.0f};
     collisionCircle.pos = {pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f};
     yVelocity = 0;
 }
@@ -54,9 +56,7 @@ void Character::tick(float deltaTime, int winHeight)
         {
             if(!puff.GetActive())
             {
-                puff.Reset();
-                puff.SetActive(true);
-                puff.SetPosition(pos);
+                puff.Activate(pos);
                 break;  
             }
         }

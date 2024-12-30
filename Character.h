@@ -8,18 +8,18 @@
 class Character
 {
 public:
-    Character(int winWidth, int winHeight);
+    Character(Vector2 winSize);
     ~Character();
     bool OutOfBounds(int winHeight);
     void tick(float deltaTime, int winHeight);
     Circle GetCollisionCircle() {return collisionCircle;};
-    void Reset(int winWidth, int winHeight);
+    void Reset();
     Vector2 GetPosition(){return pos;};
 
 protected:
     Texture2D texture{}, smokePuffTexture{};
     Rectangle spriteRect{};
-    Vector2 pos{};
+    Vector2 pos{}, windowDimensions{};
     Circle collisionCircle{};
 
     int frame{0};

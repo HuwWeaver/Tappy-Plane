@@ -8,11 +8,10 @@ class SmokePuff
 public:
     SmokePuff();
     ~SmokePuff();
-    void Init(Texture2D sprite, Vector2 startPos);
+    void Init(Texture2D sprite);
     void tick(float deltaTime);
     bool GetActive() {return active;};
-    void SetActive(bool newActive) {active = newActive;};
-    void SetPosition(Vector2 newPos) {pos = newPos;};
+    void Activate(Vector2 newPos);
     void Reset();
 
 protected:

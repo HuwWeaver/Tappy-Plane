@@ -50,7 +50,7 @@ int main()
     float collectiblesRunningTime{2.0};
     float collectibleInterval{2.0};
 
-    Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
+    Character character{windowDimensions};
 
     bool gameOver{false};
     float timeScore{0.0}, totalScore{0.0};
@@ -103,7 +103,7 @@ int main()
                 {
                     collecible.Reset();
                 }
-                character.Reset(windowDimensions.x, windowDimensions.y);
+                character.Reset();
                 timeScore = 0.0;
                 totalScore = 0.0;
                 obstacleScore = 0;
