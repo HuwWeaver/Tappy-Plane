@@ -20,7 +20,7 @@ protected:
     Vector2 pos{}, windowDimensions{};
     Circle collisionCircle{};
 
-    float speed{200};
+    float speed{200}, rotation{0.0}, rotationSpeed{50};
     bool active{false};
 };
 

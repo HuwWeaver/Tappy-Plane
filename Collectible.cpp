@@ -32,9 +32,17 @@ void Collectible::tick(float deltaTime)
         pos.x -= speed * deltaTime;
         if(pos.x <= -50) Reset();
 
-        collisionCircle.pos = {pos.x + texture.width/2.0f, pos.y + texture.height/2.0f};
+        collisionCircle.pos = pos;
 
-        DrawTextureV(texture, pos, WHITE);
+        rotation += rotationSpeed * deltaTime;
+        if (rotation >= 360) rotation = 0; 
+
+        DrawTexturePro(texture, 
+            {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)}, 
+            {pos.x, pos.y, static_cast<float>(texture.width), static_cast<float>(texture.height)}, 
+            {texture.width/2.0f, texture.height/2.0f},
+            rotation,
+            WHITE);
 
         //Debug Circle
         //DrawCircleLines(collisionCircle.pos.x, collisionCircle.pos.y, collisionCircle.radius, RED);
