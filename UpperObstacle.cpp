@@ -15,9 +15,9 @@ void UpperObstacle::tick(float deltaTime)
     
     if(active)
     {
-        DrawTextureRec(texture, spriteRect, pos, WHITE);
+        DrawTextureV(texture, pos, WHITE);
 
-        collisionLine = {{pos.x + spriteRect.width/2.0f + 10, pos.y + spriteRect.height}, pos};
+        collisionLine = {{pos.x + texture.width/2.0f + 10, pos.y + texture.height}, pos};
         //DEBUG Line
         //DrawLine(collisionLine.point1.x, collisionLine.point1.y, collisionLine.point2.x, collisionLine.point2.y, BLUE);
     }

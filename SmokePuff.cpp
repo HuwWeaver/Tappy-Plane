@@ -24,7 +24,7 @@ void SmokePuff::tick(float deltaTime)
         colorLerpFactor -= fadeSpeed * deltaTime;
         if (colorLerpFactor <= 0) colorLerpFactor = 0;
 
-        DrawTextureEx(texture, pos, 0.0, 1.0, ColorLerp(BLANK, GRAY, colorLerpFactor));
+        DrawTextureV(texture, pos, ColorLerp(BLANK, GRAY, colorLerpFactor));
     }
 }
 

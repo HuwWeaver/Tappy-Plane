@@ -12,7 +12,8 @@ public:
 
 protected:
     Texture2D texture{};
-    float xPos{}, speed{}, yPos{};
+    Vector2 pos{};
+    float speed{};
 };
 
 #endif

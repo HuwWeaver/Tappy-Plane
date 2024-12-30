@@ -1,8 +1,9 @@
 #include "Background.h"
 
-Background::Background(const char *textureFilePath, float scrollSpeed, float yPos) : speed(scrollSpeed), yPos(yPos)
+Background::Background(const char *textureFilePath, float scrollSpeed, float yPos) : speed(scrollSpeed)
 {
     texture = LoadTexture(textureFilePath);
+    pos.y = yPos;
 }
 
 Background::~Background()
@@ -12,13 +13,13 @@ Background::~Background()
 
 void Background::tick(float deltaTime)
 {
-    xPos -= speed * deltaTime;
+    pos.x -= speed * deltaTime;
 
-    if(xPos <= -texture.width)
+    if(pos.x <= -texture.width)
     {
-        xPos = 0.0f;
+        pos.x = 0.0f;
     }
 
-    DrawTextureEx(texture, {xPos, yPos}, 0.0, 1.0, WHITE);
-    DrawTextureEx(texture, {xPos + texture.width, yPos}, 0.0, 1.0, WHITE);
+    DrawTextureV(texture, pos, WHITE);
+    DrawTextureV(texture, {pos.x + texture.width, pos.y}, WHITE);
 }

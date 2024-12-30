@@ -19,12 +19,10 @@ public:
 
 protected:
     Texture2D texture{};
-    Rectangle spriteRect{};
     Vector2 pos{};
     Line collisionLine{};
 
     int speed{200};
-    float collisionPadding{10};
     bool active{false}, scoreAdded{false};
 };
 

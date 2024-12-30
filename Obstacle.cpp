@@ -6,7 +6,6 @@ void Obstacle::Init(Texture2D sprite, int winWidth, int winHeight)
 {
     //Assign texture
     texture = sprite;
-    spriteRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
     
     //Set Initial Position
     SetStartPosition(winWidth, winHeight);
