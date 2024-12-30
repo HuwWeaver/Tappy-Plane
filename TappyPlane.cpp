@@ -5,12 +5,13 @@
 //Raylib
 #include "raylib.h"
 //Custom
+#include "Structs.h"
 #include "Background.h"
 #include "Character.h"
 #include "Obstacle.h"
 #include "UpperObstacle.h"
 #include "LowerObstacle.h"
-#include "Structs.h"
+#include "Collectible.h"
 
 int main()
 {
@@ -19,12 +20,11 @@ int main()
     InitWindow(windowDimensions.x, windowDimensions.y, "Tappy Plane!");
 
     //create obstacle pool of equal amount upper and lower obstacles
-    const int numEachObstacleType{3};
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
     Texture2D lowerRock = LoadTexture("textures/rock.png");
     Texture2D upperRock = LoadTexture("textures/rockDown.png");
 
-    for(int i=0; i < numEachObstacleType; i++)
+    for(int i=0; i < 3; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
         obstaclePool.back()->Init(lowerRock, windowDimensions.x, windowDimensions.y);
@@ -33,8 +33,22 @@ int main()
     }
 
     //obstacle timer
-    float runningTime{2.0};
-    float obstacleInterval{2.0}, minInterval{1.0}, maxInterval{2.5};
+    float obstacleRunningTime{2.0};
+    float obstacleInterval{2.0};
+    const float minInterval{1.0}, maxInterval{2.5};
+
+    //Create Collectibles Pool
+    Collectible colleciblesPool[5]{};
+    Texture2D collectibleTexture = LoadTexture("textures/starGold.png");
+
+    for (auto& collectible : colleciblesPool)
+    {
+        collectible.Init(collectibleTexture, windowDimensions);
+    }
+
+    //collectibles timer
+    float collectiblesRunningTime{2.0};
+    float collectibleInterval{2.0};
 
     Character character{static_cast<int>(windowDimensions.x), static_cast<int>(windowDimensions.y)};
 
@@ -90,10 +104,10 @@ int main()
         }
         else
         {
-            runningTime += dt;
-            if(runningTime >= obstacleInterval)
+            obstacleRunningTime += dt;
+            if(obstacleRunningTime >= obstacleInterval)
             {
-                runningTime = 0;
+                obstacleRunningTime = 0;
                 obstacleInterval = GetRandomValue(minInterval, maxInterval);
 
                 std::vector<Obstacle*> inactivePool;
@@ -118,11 +132,33 @@ int main()
 
             }
 
+            collectiblesRunningTime += dt;
+            if(collectiblesRunningTime >= collectibleInterval)
+            {
+                collectiblesRunningTime = 0;
+                collectibleInterval = GetRandomValue(minInterval, maxInterval);
+
+                for(auto& collecible : colleciblesPool)
+                {
+                    if(!collecible.active)
+                    {
+                        collecible.SetActive(true);
+                        break;
+                    }
+                }
+            }
+
             //tick all active obstacles - update position and collisions
             for (auto& obstacle : obstaclePool)
             {
                 if(obstacle->GetActive()) obstacle->tick(dt);            
-            } 
+            }
+
+            //tick all active collectibles
+            for (auto& collectible : colleciblesPool)
+            {
+                if(collectible.active) collectible.tick(dt);
+            }
 
             character.tick(dt, windowDimensions.y);
 
@@ -161,6 +197,7 @@ int main()
     //Unload Textures
     UnloadTexture(lowerRock);
     UnloadTexture(upperRock);
+    UnloadTexture(collectibleTexture);
 
     CloseWindow();
 }

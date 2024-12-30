@@ -5,7 +5,7 @@ Character::Character(int winWidth, int winHeight)
     texture = LoadTexture("textures/Planes/planeRedSpriteSheet.png");
     spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
-    collisionCircle = {Vector2{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
+    collisionCircle = {{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
 
     smokePuffTexture = LoadTexture("textures/puffSmall.png");
 
