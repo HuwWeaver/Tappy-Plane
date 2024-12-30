@@ -2,15 +2,10 @@
 
 Obstacle::Obstacle(){}
 
-Obstacle::~Obstacle()
-{
-    UnloadTexture(texture);
-}
-
-void Obstacle::Init(const char *textureFilePath, int winWidth, int winHeight)
+void Obstacle::Init(Texture2D sprite, int winWidth, int winHeight)
 {
     //Assign texture
-    texture = LoadTexture(textureFilePath);
+    texture = sprite;
     spriteRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
     
     //Set Initial Position

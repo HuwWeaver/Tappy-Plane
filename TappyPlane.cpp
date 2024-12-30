@@ -21,13 +21,15 @@ int main()
     //create obstacle pool of equal amount upper and lower obstacles
     const int numEachObstacleType{3};
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
+    Texture2D lowerRock = LoadTexture("textures/rock.png");
+    Texture2D upperRock = LoadTexture("textures/rockDown.png");
 
     for(int i=0; i < numEachObstacleType; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
-        obstaclePool.back()->Init("textures/rock.png", windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init(lowerRock, windowDimensions.x, windowDimensions.y);
         obstaclePool.push_back(std::make_unique<UpperObstacle>());
-        obstaclePool.back()->Init("textures/rockDown.png", windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init(upperRock, windowDimensions.x, windowDimensions.y);
     }
 
     //obstacle timer
@@ -155,6 +157,10 @@ int main()
 
         EndDrawing();
     }
+
+    //Unload Textures
+    UnloadTexture(lowerRock);
+    UnloadTexture(upperRock);
 
     CloseWindow();
 }

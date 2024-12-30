@@ -7,9 +7,9 @@ SmokePuff::~SmokePuff()
     UnloadTexture(texture);
 }
 
-void SmokePuff::Init(const char *textureFilePath, Vector2 startPos)
+void SmokePuff::Init(Texture2D sprite, Vector2 startPos)
 {
-    texture = LoadTexture(textureFilePath);
+    texture = sprite;
     SetPosition(startPos);
 }
 

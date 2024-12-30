@@ -17,7 +17,7 @@ public:
     Vector2 GetPosition(){return pos;};
 
 protected:
-    Texture2D texture{};
+    Texture2D texture{}, smokePuffTexture{};
     Rectangle spriteRect{};
     Vector2 pos{};
     Circle collisionCircle{};
@@ -31,7 +31,7 @@ protected:
     int yVelocity{0};
     const int gravity{1000};
 
-    SmokePuff particlePool[5];
+    SmokePuff smokePuffPool[5];
 };
 
 #endif

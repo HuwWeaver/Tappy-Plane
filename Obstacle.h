@@ -8,8 +8,7 @@ class Obstacle
 {
 public:
     Obstacle();
-    ~Obstacle();
-    void Init(const char *textureFilePath, int winWidth, int winHeight);
+    void Init(Texture2D sprite, int winWidth, int winHeight);
     virtual void SetStartPosition(int winWidth, int winHeight);
     virtual void tick(float deltaTime);
     Line GetCollisionLine() {return collisionLine;};

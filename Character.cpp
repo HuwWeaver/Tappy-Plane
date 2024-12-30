@@ -7,15 +7,18 @@ Character::Character(int winWidth, int winHeight)
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
     collisionCircle = {Vector2{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
 
-    for (auto& particle : particlePool)
+    smokePuffTexture = LoadTexture("textures/puffSmall.png");
+
+    for (auto& puff : smokePuffPool)
     {
-        particle.Init("textures/puffSmall.png", pos);
+        puff.Init(smokePuffTexture, pos);
     }
 }
 
 Character::~Character()
 {
     UnloadTexture(texture);
+    UnloadTexture(smokePuffTexture);
 }
 
 bool Character::OutOfBounds(int winHeight)
@@ -28,9 +31,9 @@ bool Character::OutOfBounds(int winHeight)
 
 void Character::Reset(int winWidth, int winHeight)
 {
-    for (auto& particle : particlePool)
+    for (auto& puff : smokePuffPool)
     {
-        particle.Reset();
+        puff.Reset();
     }
     
     pos = {winWidth/4.0f - (texture.width/4.0f)/2.0f, winHeight/3.0f};
@@ -47,13 +50,13 @@ void Character::tick(float deltaTime, int winHeight)
     {
         yVelocity += jumpVel;
 
-        for (auto& particle : particlePool)
+        for (auto& puff : smokePuffPool)
         {
-            if(!particle.GetActive())
+            if(!puff.GetActive())
             {
-                particle.Reset();
-                particle.SetActive(true);
-                particle.SetPosition(pos);
+                puff.Reset();
+                puff.SetActive(true);
+                puff.SetPosition(pos);
                 break;  
             }
         }
@@ -77,9 +80,9 @@ void Character::tick(float deltaTime, int winHeight)
     }
 
     //Tick Particles
-    for (auto& particle : particlePool)
+    for (auto& puff : smokePuffPool)
     {
-        if(particle.GetActive()) particle.tick(deltaTime);
+        if(puff.GetActive()) puff.tick(deltaTime);
     }
 
     DrawTextureRec(texture, spriteRect, pos, WHITE);

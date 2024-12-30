@@ -8,7 +8,7 @@ class SmokePuff
 public:
     SmokePuff();
     ~SmokePuff();
-    void Init(const char *textureFilePath, Vector2 startPos);
+    void Init(Texture2D sprite, Vector2 startPos);
     void tick(float deltaTime);
     bool GetActive() {return active;};
     void SetActive(bool newActive) {active = newActive;};
