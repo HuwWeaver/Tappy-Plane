@@ -8,18 +8,18 @@ class Obstacle
 {
 public:
     Obstacle();
-    void Init(Texture2D sprite, int winWidth, int winHeight);
-    virtual void SetStartPosition(int winWidth, int winHeight);
+    void Init(Texture2D sprite, Vector2 winSize);
     virtual void tick(float deltaTime);
     Line GetCollisionLine() {return collisionLine;};
     bool GetActive() {return active;};
-    void SetActive(bool newActive) {active = newActive;};
-    void Reset(int winWidth, int winHeight);
+    void Activate();
+    void Reset();
     bool hasPassedChar(float charXPos);
+    virtual void ResetPosition();
 
 protected:
     Texture2D texture{};
-    Vector2 pos{};
+    Vector2 pos{}, windowDimensions{};
     Line collisionLine{};
 
     int speed{200};

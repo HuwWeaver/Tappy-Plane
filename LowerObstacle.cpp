@@ -2,11 +2,11 @@
 
 LowerObstacle::LowerObstacle(){}
 
-void LowerObstacle::SetStartPosition(int winWidth, int winHeight)
+void LowerObstacle::ResetPosition()
 {
-    Obstacle::SetStartPosition(winWidth, winHeight);
+    Obstacle::ResetPosition();
 
-    pos.y = static_cast<float>(winHeight - texture.height + 10);
+    pos.y = windowDimensions.y - texture.height + 10;
 }
 
 void LowerObstacle::tick(float deltaTime)

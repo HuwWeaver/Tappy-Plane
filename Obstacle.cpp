@@ -2,26 +2,28 @@
 
 Obstacle::Obstacle(){}
 
-void Obstacle::Init(Texture2D sprite, int winWidth, int winHeight)
+void Obstacle::Init(Texture2D sprite, Vector2 winSize)
 {
     //Assign texture
     texture = sprite;
     
+    windowDimensions = winSize;
+
     //Set Initial Position
-    SetStartPosition(winWidth, winHeight);
+    ResetPosition();
 }
 
-void Obstacle::SetStartPosition(int winWidth, int winHeight)
+void Obstacle::Activate()
 {
-    //Set Start Position
-    pos.x = static_cast<float>(winWidth + 200);
+    ResetPosition();
+    active = true;
 }
 
-void Obstacle::Reset(int winWidth, int winHeight)
+void Obstacle::Reset()
 {
     scoreAdded = false;
-    SetActive(false);
-    SetStartPosition(winWidth, winHeight);
+    active = false;
+    ResetPosition();
 }
 
 void Obstacle::tick(float deltaTime)
@@ -29,8 +31,13 @@ void Obstacle::tick(float deltaTime)
     if(active)
     {
         pos.x -= speed * deltaTime;
-        if(pos.x <= -100) SetActive(false);
+        if(pos.x <= -100) Reset();
     }
+}
+
+void Obstacle::ResetPosition()
+{
+    pos.x = windowDimensions.x + 200;
 }
 
 bool Obstacle::hasPassedChar(float charXPos)

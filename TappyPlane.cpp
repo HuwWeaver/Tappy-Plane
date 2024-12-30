@@ -27,9 +27,9 @@ int main()
     for(int i=0; i < 3; i++)
     {
         obstaclePool.push_back(std::make_unique<LowerObstacle>());
-        obstaclePool.back()->Init(lowerRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init(lowerRock, windowDimensions);
         obstaclePool.push_back(std::make_unique<UpperObstacle>());
-        obstaclePool.back()->Init(upperRock, windowDimensions.x, windowDimensions.y);
+        obstaclePool.back()->Init(upperRock, windowDimensions);
     }
 
     //obstacle timer
@@ -97,7 +97,7 @@ int main()
             {
                 for (auto& obstacle : obstaclePool)
                 {
-                    obstacle->Reset(windowDimensions.x, windowDimensions.y);            
+                    obstacle->Reset();            
                 }
                 for (auto& collecible : collectiblesPool)
                 {
@@ -135,8 +135,7 @@ int main()
                 if (!inactivePool.empty())
                 {
                     int obs = GetRandomValue(0, inactivePool.size() - 1);
-                    inactivePool.at(obs)->SetActive(true);
-                    inactivePool.at(obs)->SetStartPosition(windowDimensions.x, windowDimensions.y);
+                    inactivePool.at(obs)->Activate();
                 }
 
             }

@@ -7,7 +7,7 @@ class LowerObstacle : public Obstacle
 {
 public:
     LowerObstacle();
-    virtual void SetStartPosition(int winWidth, int winHeight) override;
+    virtual void ResetPosition() override;
     virtual void tick(float deltaTime) override;
 };
 

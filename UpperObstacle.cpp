@@ -2,9 +2,9 @@
 
 UpperObstacle::UpperObstacle(){}
 
-void UpperObstacle::SetStartPosition(int winWidth, int winHeight)
+void UpperObstacle::ResetPosition()
 {
-    Obstacle::SetStartPosition(winWidth, winHeight);
+    Obstacle::ResetPosition();
 
     pos.y = static_cast<float>(-10);
 }
