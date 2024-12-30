@@ -10,18 +10,18 @@ public:
     Collectible();
     void Init(Texture2D sprite, Vector2 winSize);
     void tick(float deltaTime);
-    void SetActive(bool newActive) {active = newActive;};
-    void SetPosition(Vector2 newPos) {pos = newPos;};
+    Circle GetCollisionCircle() {return collisionCircle;};
+    bool GetActive() {return active;};
+    void Activate();
     void Reset();
 
-    bool active{false};
-    
 protected:
     Texture2D texture{};
-    Vector2 pos{}, windowSize{};
+    Vector2 pos{}, windowDimensions{};
     Circle collisionCircle{};
 
     float speed{200};
+    bool active{false};
 };
 
 #endif

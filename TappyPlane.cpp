@@ -38,10 +38,10 @@ int main()
     const float minInterval{1.0}, maxInterval{2.5};
 
     //Create Collectibles Pool
-    Collectible colleciblesPool[5]{};
+    Collectible collectiblesPool[5]{};
     Texture2D collectibleTexture = LoadTexture("textures/starGold.png");
 
-    for (auto& collectible : colleciblesPool)
+    for (auto& collectible : collectiblesPool)
     {
         collectible.Init(collectibleTexture, windowDimensions);
     }
@@ -54,7 +54,7 @@ int main()
 
     bool gameOver{false};
     float timeScore{0.0}, totalScore{0.0};
-    int obstacleScore{0};
+    int obstacleScore{0}, collectibleScore{0};
 
     Background background{"textures/background.png", 25};
 
@@ -88,6 +88,10 @@ int main()
             obstacleScoreText.append(std::to_string(obstacleScore), 0, 5);
             DrawText(obstacleScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 55, 30, BLACK);
 
+            std::string collectibleScoreText = "Stars Collected: ";
+            collectibleScoreText.append(std::to_string(collectibleScore), 0, 5);
+            DrawText(collectibleScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 80, 30, BLACK);
+
             //Reset Game
             if(IsKeyPressed(KEY_R))
             {
@@ -95,10 +99,15 @@ int main()
                 {
                     obstacle->Reset(windowDimensions.x, windowDimensions.y);            
                 }
+                for (auto& collecible : collectiblesPool)
+                {
+                    collecible.Reset();
+                }
                 character.Reset(windowDimensions.x, windowDimensions.y);
                 timeScore = 0.0;
                 totalScore = 0.0;
                 obstacleScore = 0;
+                collectibleScore = 0;
                 gameOver = false;
             }
         }
@@ -138,26 +147,26 @@ int main()
                 collectiblesRunningTime = 0;
                 collectibleInterval = GetRandomValue(minInterval, maxInterval);
 
-                for(auto& collecible : colleciblesPool)
+                for(auto& collecible : collectiblesPool)
                 {
-                    if(!collecible.active)
+                    if(!collecible.GetActive())
                     {
-                        collecible.SetActive(true);
+                        collecible.Activate();
                         break;
                     }
                 }
             }
 
+            //tick all active collectibles
+            for (auto& collectible : collectiblesPool)
+            {
+                if(collectible.GetActive()) collectible.tick(dt);
+            }
+            
             //tick all active obstacles - update position and collisions
             for (auto& obstacle : obstaclePool)
             {
                 if(obstacle->GetActive()) obstacle->tick(dt);            
-            }
-
-            //tick all active collectibles
-            for (auto& collectible : colleciblesPool)
-            {
-                if(collectible.active) collectible.tick(dt);
             }
 
             character.tick(dt, windowDimensions.y);
@@ -183,9 +192,23 @@ int main()
                 }
             }
 
+            //Check active collectible collisions & add to score/reset if collided
+            for (auto& collectible : collectiblesPool)
+            {
+                if(collectible.GetActive())
+                {
+                    if(CheckCollisionCircles(collectible.GetCollisionCircle().pos, collectible.GetCollisionCircle().radius,
+                                            character.GetCollisionCircle().pos, character.GetCollisionCircle().radius))
+                    {
+                        collectibleScore++;
+                        collectible.Reset();
+                    }
+                }
+            }
+
             //Draw Score
             timeScore += dt;
-            totalScore = timeScore + obstacleScore;
+            totalScore = timeScore + obstacleScore + collectibleScore;
             std::string scoreText = "Score: ";
             scoreText.append(std::to_string(totalScore), 0, 5);
             DrawText(scoreText.c_str(), 5, 5, 30, BLACK);           
