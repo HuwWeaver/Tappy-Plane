@@ -12,6 +12,7 @@
 #include "UpperObstacle.h"
 #include "LowerObstacle.h"
 #include "Collectible.h"
+#include "GameOverPanel.h"
 
 int main()
 {
@@ -56,6 +57,8 @@ int main()
     float timeScore{0.0}, totalScore{0.0};
     int obstacleScore{0}, collectibleScore{0};
 
+    GameOverPanel gameOverPanel{windowDimensions};
+
     Background background{"textures/background.png", 25};
 
     SetTargetFPS(60);
@@ -72,37 +75,23 @@ int main()
 
         if(gameOver)
         {
-            //Lose the game
-            DrawText("Game Over!", windowDimensions.x/4, windowDimensions.y/2 - 70, 60, BLACK);
-
-            //Draw Score
-            std::string totalScoreText = "Total Score: ";
-            totalScoreText.append(std::to_string(totalScore), 0, 5);
-            DrawText(totalScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 - 15, 50, BLACK);
-
-            std::string timeScoreText = "Time: ";
-            timeScoreText.append(std::to_string(timeScore), 0, 5);
-            DrawText(timeScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 30, 30, BLACK);
-
-            std::string obstacleScoreText = "Obstacles Passed: ";
-            obstacleScoreText.append(std::to_string(obstacleScore), 0, 5);
-            DrawText(obstacleScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 55, 30, BLACK);
-
-            std::string collectibleScoreText = "Stars Collected: ";
-            collectibleScoreText.append(std::to_string(collectibleScore), 0, 5);
-            DrawText(collectibleScoreText.c_str(), windowDimensions.x/4, windowDimensions.y/2 + 80, 30, BLACK);
+            gameOverPanel.tick();
 
             //Reset Game
             if(IsKeyPressed(KEY_R))
             {
+                gameOverPanel.Hide();
+
                 for (auto& obstacle : obstaclePool)
                 {
                     obstacle->Reset();            
                 }
+
                 for (auto& collecible : collectiblesPool)
                 {
                     collecible.Reset();
                 }
+                
                 character.Reset();
                 timeScore = 0.0;
                 totalScore = 0.0;
@@ -170,10 +159,26 @@ int main()
 
             character.tick(dt, windowDimensions.y);
 
+            //Check active collectible collisions & add to score/reset if collided
+            for (auto& collectible : collectiblesPool)
+            {
+                if(collectible.GetActive())
+                {
+                    if(CheckCollisionCircles(collectible.GetCollisionCircle().pos, collectible.GetCollisionCircle().radius,
+                                            character.GetCollisionCircle().pos, character.GetCollisionCircle().radius))
+                    {
+                        collectibleScore++;
+                        collectible.Reset();
+                    }
+                }
+            }
+
             //Check if character has hit the floor
             if(character.OutOfBounds(windowDimensions.y))
             {
                 gameOver = true;
+                gameOverPanel.SetValues(timeScore, obstacleScore, collectibleScore);
+                gameOverPanel.Show();
             }
 
             //Check active obstacle collisions & add to score if passed char
@@ -187,20 +192,8 @@ int main()
                                                 obstacle->GetCollisionLine().point1, obstacle->GetCollisionLine().point2))
                     {
                         gameOver = true;
-                    }
-                }
-            }
-
-            //Check active collectible collisions & add to score/reset if collided
-            for (auto& collectible : collectiblesPool)
-            {
-                if(collectible.GetActive())
-                {
-                    if(CheckCollisionCircles(collectible.GetCollisionCircle().pos, collectible.GetCollisionCircle().radius,
-                                            character.GetCollisionCircle().pos, character.GetCollisionCircle().radius))
-                    {
-                        collectibleScore++;
-                        collectible.Reset();
+                        gameOverPanel.SetValues(timeScore, obstacleScore, collectibleScore);
+                        gameOverPanel.Show();
                     }
                 }
             }
