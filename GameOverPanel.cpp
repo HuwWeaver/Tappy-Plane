@@ -2,7 +2,9 @@
 #include <string>
 
 GameOverPanel::GameOverPanel(Vector2 windowSize) : windowDimensions(windowSize)
-{}
+{
+    kennyFont = LoadFont("textures/Font/kenvector_future.ttf");
+}
 
 void GameOverPanel::SetValues(float time, int obstacles, int collectibles)
 {
@@ -20,7 +22,7 @@ void GameOverPanel::tick()
         DrawRectangle(box2Padding, box2Padding, windowDimensions.x - (box2Padding * 2), windowDimensions.y - (box2Padding * 2), {202, 224, 233, 255});
     
         //Lose the game
-        DrawText("Game Over!", windowDimensions.x/4 + 30, windowDimensions.y/2 - 120, 60, BLACK);
+        DrawTextEx(kennyFont,"Game Over!", {windowDimensions.x/4 + 30, windowDimensions.y/2 - 120}, 60, 0.0, BLACK);
 
         //Draw Score
         std::string totalScoreText = "Total Score: ";

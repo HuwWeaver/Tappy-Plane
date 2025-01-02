@@ -12,8 +12,9 @@ public:
     void Hide() {visible = false;};
 
 protected:
+    Font kennyFont{};
     Vector2 windowDimensions{};
-    int box1Padding{90}, box2Padding{100};
+    const int box1Padding{90}, box2Padding{100};
     bool visible{false};
     float totalScore{}, timeScore{};
     int obstacleScore{}, collectibleScore{};
