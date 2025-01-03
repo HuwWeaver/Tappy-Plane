@@ -102,6 +102,11 @@ int main()
         }
         else
         {
+            // ##########################################
+            // ########## OBJECT SPAWNING ###############
+            // ##########################################
+            
+            //Spawn new obstacle if needed
             obstacleRunningTime += dt;
             if(obstacleRunningTime >= obstacleInterval)
             {
@@ -129,6 +134,7 @@ int main()
 
             }
 
+            //Spawn new collectible if needed
             collectiblesRunningTime += dt;
             if(collectiblesRunningTime >= collectibleInterval)
             {
@@ -145,6 +151,10 @@ int main()
                 }
             }
 
+            // ##########################################
+            // ########## TICK EVENTS ###################
+            // ##########################################
+
             //tick all active collectibles
             for (auto& collectible : collectiblesPool)
             {
@@ -158,6 +168,10 @@ int main()
             }
 
             character.tick(dt, windowDimensions.y);
+
+            // ##########################################
+            // ########## COLLISION CHECKS ##############
+            // ##########################################
 
             //Check active collectible collisions & add to score/reset if collided
             for (auto& collectible : collectiblesPool)
