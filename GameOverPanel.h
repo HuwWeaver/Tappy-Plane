@@ -6,13 +6,15 @@
 class GameOverPanel {
 public:
     GameOverPanel(Vector2 windowSize);
+    ~GameOverPanel();
     void SetValues(float time, int obstacles, int collectibles);
     void tick();
     void Show() {visible = true;};
     void Hide() {visible = false;};
 
 protected:
-    Font kennyFont{};
+    Font textFont{};
+    Texture2D gameOverText{};
     Vector2 windowDimensions{};
     const int box1Padding{90}, box2Padding{100};
     bool visible{false};

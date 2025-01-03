@@ -7,7 +7,6 @@ class SmokePuff
 {
 public:
     SmokePuff();
-    ~SmokePuff();
     void Init(Texture2D sprite);
     void tick(float deltaTime);
     bool GetActive() {return active;};

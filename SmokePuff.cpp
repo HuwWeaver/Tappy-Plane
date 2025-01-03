@@ -2,11 +2,6 @@
 
 SmokePuff::SmokePuff(){}
 
-SmokePuff::~SmokePuff()
-{
-    UnloadTexture(texture);
-}
-
 void SmokePuff::Init(Texture2D sprite)
 {
     texture = sprite;
