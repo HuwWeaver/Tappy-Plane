@@ -14,7 +14,7 @@ void CollectionEffectEmitter::SpawnParticles(Vector2 newPos)
 
     for (auto& particle : particlePool)
     {
-        particle.Spawn(pos, 50, GetRandomValue(-300, 50));
+        particle.Spawn(pos);
     }
 }
 
@@ -25,5 +25,6 @@ void CollectionEffectEmitter::tick()
         particle.tick();
     }
     
-    DrawCircle(pos.x, pos.y, 5, RED);
+    //DEBUG CIRCLE
+    //DrawCircle(pos.x, pos.y, 5, RED);
 }
