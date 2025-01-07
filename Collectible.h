@@ -11,6 +11,7 @@ public:
     void Init(Texture2D sprite, Vector2 winSize);
     void tick(float deltaTime);
     Circle GetCollisionCircle() {return collisionCircle;};
+    Vector2 GetPosition() {return pos;};
     bool GetActive() {return active;};
     void Activate();
     void Reset();

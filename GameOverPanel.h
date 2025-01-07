@@ -1,5 +1,5 @@
-#ifndef GAMEOVERPANEL_H
-#define GAMEOVERPANEL_H
+#ifndef GAME_OVER_PANEL_H
+#define GAME_OVER_PANEL_H
 
 #include "raylib.h"
 

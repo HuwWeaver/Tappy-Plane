@@ -12,6 +12,7 @@
 #include "UpperObstacle.h"
 #include "LowerObstacle.h"
 #include "Collectible.h"
+#include "CollectionEffectEmitter.h"
 #include "GameOverPanel.h"
 
 int main()
@@ -41,6 +42,7 @@ int main()
     //Create Collectibles Pool
     Collectible collectiblesPool[5]{};
     Texture2D collectibleTexture = LoadTexture("textures/starGold.png");
+    CollectionEffectEmitter collectionEffectEmitter{collectibleTexture};
 
     for (auto& collectible : collectiblesPool)
     {
@@ -161,6 +163,8 @@ int main()
                 if(collectible.GetActive()) collectible.tick(dt);
             }
             
+            collectionEffectEmitter.tick();
+
             //tick all active obstacles - update position and collisions
             for (auto& obstacle : obstaclePool)
             {
@@ -182,6 +186,7 @@ int main()
                                             character.GetCollisionCircle().pos, character.GetCollisionCircle().radius))
                     {
                         collectibleScore++;
+                        collectionEffectEmitter.SpawnParticles(collectible.GetPosition());
                         collectible.Reset();
                     }
                 }
