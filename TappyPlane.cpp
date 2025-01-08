@@ -23,6 +23,12 @@ int main()
 
     //Audio
     InitAudioDevice();
+    SetMasterVolume(0.5);
+
+    //Background SFX
+    Music backgroundSFX = LoadMusicStream("sfx/backgroundMusic.wav");
+    backgroundSFX.looping = true;
+    SetMusicVolume(backgroundSFX, 0.15);
 
     //create obstacle pool of equal amount upper and lower obstacles
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
@@ -67,10 +73,13 @@ int main()
 
     Background background{"textures/background.png", 25};
 
+    PlayMusicStream(backgroundSFX);
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
+        UpdateMusicStream(backgroundSFX);
+        
         // Delta time
         float dt = GetFrameTime();
 
@@ -239,6 +248,7 @@ int main()
     UnloadTexture(collectibleTexture);
 
     //Unload Audio
+    UnloadMusicStream(backgroundSFX);
     UnloadSound(collectionSFX);
 
     CloseAudioDevice();
