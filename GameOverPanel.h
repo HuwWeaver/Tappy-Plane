@@ -9,12 +9,13 @@ public:
     ~GameOverPanel();
     void SetValues(float time, int obstacles, int collectibles);
     void tick();
-    void Show() {visible = true;};
+    void Show();
     void Hide() {visible = false;};
 
 protected:
     Font textFont{};
     Texture2D gameOverText{};
+    Sound gameOverSFX{};
     Vector2 windowDimensions{};
     const int box1Padding{90}, box2Padding{100};
     bool visible{false};

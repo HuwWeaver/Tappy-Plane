@@ -4,6 +4,7 @@
 GameOverPanel::GameOverPanel(Vector2 windowSize) : windowDimensions(windowSize)
 {
     gameOverText = LoadTexture("textures/UI/textGameOver.png");
+    gameOverSFX = LoadSound("sfx/GameOver.wav");
     textFont = GetFontDefault();
 }
 
@@ -11,6 +12,7 @@ GameOverPanel::~GameOverPanel()
 {
     UnloadTexture(gameOverText);
     UnloadFont(textFont);
+    UnloadSound(gameOverSFX);
 }
 
 void GameOverPanel::SetValues(float time, int obstacles, int collectibles)
@@ -19,6 +21,12 @@ void GameOverPanel::SetValues(float time, int obstacles, int collectibles)
     obstacleScore = obstacles;
     collectibleScore = collectibles;
     totalScore = timeScore + obstacleScore + collectibleScore;
+}
+
+void GameOverPanel::Show()
+{
+    visible = true;
+    PlaySound(gameOverSFX);
 }
 
 void GameOverPanel::tick()
