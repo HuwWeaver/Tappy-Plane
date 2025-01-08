@@ -21,6 +21,9 @@ int main()
     Vector2 windowDimensions{800, 480};
     InitWindow(windowDimensions.x, windowDimensions.y, "Tappy Plane!");
 
+    //Audio
+    InitAudioDevice();
+
     //create obstacle pool of equal amount upper and lower obstacles
     std::vector<std::unique_ptr<Obstacle>> obstaclePool;
     Texture2D lowerRock = LoadTexture("textures/rock.png");
@@ -42,11 +45,12 @@ int main()
     //Create Collectibles Pool
     Collectible collectiblesPool[5]{};
     Texture2D collectibleTexture = LoadTexture("textures/starGold.png");
+    Sound collectionSFX = LoadSound("sfx/StarCollect.wav");
     CollectionEffectEmitter collectionEffectEmitter{collectibleTexture};
 
     for (auto& collectible : collectiblesPool)
     {
-        collectible.Init(collectibleTexture, windowDimensions);
+        collectible.Init(collectibleTexture, collectionSFX, windowDimensions);
     }
 
     //collectibles timer
@@ -187,7 +191,7 @@ int main()
                     {
                         collectibleScore++;
                         collectionEffectEmitter.SpawnParticles(collectible.GetPosition());
-                        collectible.Reset();
+                        collectible.Collect();
                     }
                 }
             }
@@ -232,6 +236,11 @@ int main()
     UnloadTexture(lowerRock);
     UnloadTexture(upperRock);
     UnloadTexture(collectibleTexture);
+
+    //Unload Audio
+    UnloadSound(collectionSFX);
+
+    CloseAudioDevice();
 
     CloseWindow();
 }

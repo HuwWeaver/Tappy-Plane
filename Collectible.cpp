@@ -2,10 +2,11 @@
 
 Collectible::Collectible(){}
 
-void Collectible::Init(Texture2D sprite, Vector2 winSize)
+void Collectible::Init(Texture2D sprite, Sound sfx, Vector2 winSize)
 {
     texture = sprite;
     collisionCircle = {{pos.x + texture.width/2.0f, pos.y + texture.height/2.0f}, 18};
+    collectionSFX = sfx;
     
     windowDimensions = winSize;
 
@@ -17,6 +18,13 @@ void Collectible::Activate()
 {
     pos = {windowDimensions.x + 50 , windowDimensions.y/2.0f + GetRandomValue(-100, 100)};
     active = true;
+}
+
+void Collectible::Collect()
+{
+    SetSoundPitch(collectionSFX, GetRandomValue(9, 11)/10.0f);
+    PlaySound(collectionSFX);
+    active = false;
 }
 
 void Collectible::Reset()
