@@ -28,3 +28,11 @@ void CollectionEffectEmitter::tick()
     //DEBUG CIRCLE
     //DrawCircle(pos.x, pos.y, 5, RED);
 }
+
+void CollectionEffectEmitter::Reset()
+{
+    for (auto& particle : particlePool)
+    {
+        particle.Reset();
+    }
+}

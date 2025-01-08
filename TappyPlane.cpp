@@ -98,6 +98,7 @@ int main()
                     collecible.Reset();
                 }
                 
+                collectionEffectEmitter.Reset();
                 character.Reset();
                 timeScore = 0.0;
                 totalScore = 0.0;

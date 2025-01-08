@@ -9,6 +9,7 @@ public:
     void Init(Texture2D sprite);
     void tick();
     void Spawn(Vector2 startPos);
+    void Reset() {active = false;};
 
 private:
     Texture2D texture{};

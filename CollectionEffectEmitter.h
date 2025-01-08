@@ -10,6 +10,7 @@ public:
     CollectionEffectEmitter(Texture2D sprite);
     void SpawnParticles(Vector2 newPos);
     void tick();
+    void Reset();
 
 private:
     CollectionEffectParticle particlePool[5]; 
