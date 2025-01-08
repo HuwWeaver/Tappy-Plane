@@ -10,9 +10,9 @@ GameOverPanel::GameOverPanel(Vector2 windowSize) : windowDimensions(windowSize)
 
 GameOverPanel::~GameOverPanel()
 {
+    UnloadSound(gameOverSFX);
     UnloadTexture(gameOverText);
     UnloadFont(textFont);
-    UnloadSound(gameOverSFX);
 }
 
 void GameOverPanel::SetValues(float time, int obstacles, int collectibles)

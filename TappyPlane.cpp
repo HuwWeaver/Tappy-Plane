@@ -242,14 +242,14 @@ int main()
         EndDrawing();
     }
 
+    //Unload Audio
+    UnloadMusicStream(backgroundSFX);
+    UnloadSound(collectionSFX);
+    
     //Unload Textures
     UnloadTexture(lowerRock);
     UnloadTexture(upperRock);
     UnloadTexture(collectibleTexture);
-
-    //Unload Audio
-    UnloadMusicStream(backgroundSFX);
-    UnloadSound(collectionSFX);
 
     CloseAudioDevice();
 

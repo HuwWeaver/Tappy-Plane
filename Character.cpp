@@ -9,6 +9,9 @@ Character::Character(Vector2 winSize)
     pos = {windowDimensions.x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions.y/3.0f};
     collisionCircle = {{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
 
+    jumpSFX = LoadSound("sfx/Jump.wav");
+    SetSoundVolume(jumpSFX, 0.5);
+
     smokePuffTexture = LoadTexture("textures/puffSmall.png");
 
     for (auto& puff : smokePuffPool)
@@ -19,6 +22,7 @@ Character::Character(Vector2 winSize)
 
 Character::~Character()
 {
+    UnloadSound(jumpSFX);
     UnloadTexture(texture);
     UnloadTexture(smokePuffTexture);
 }
@@ -51,6 +55,8 @@ void Character::tick(float deltaTime, int winHeight)
     if(IsKeyPressed(KEY_SPACE))
     {
         yVelocity += jumpVel;
+        SetSoundPitch(jumpSFX, GetRandomValue(8, 12)/10.0f);
+        PlaySound(jumpSFX);
 
         for (auto& puff : smokePuffPool)
         {

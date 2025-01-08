@@ -18,6 +18,7 @@ public:
 
 protected:
     Texture2D texture{}, smokePuffTexture{};
+    Sound jumpSFX{};
     Rectangle spriteRect{};
     Vector2 pos{}, windowDimensions{};
     Circle collisionCircle{};
