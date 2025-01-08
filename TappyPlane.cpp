@@ -74,7 +74,7 @@ int main()
     Background background{"textures/background.png", 25};
 
     PlayMusicStream(backgroundSFX);
-    SetTargetFPS(60);
+    SetTargetFPS(120);
 
     while (!WindowShouldClose())
     {
