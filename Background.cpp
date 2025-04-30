@@ -1,6 +1,6 @@
 #include "Background.h"
 
-Background::Background(const char *textureFilePath, float scrollSpeed, float yPos) : speed(scrollSpeed)
+Background::Background(const char *textureFilePath, const float scrollSpeed, const float yPos) : speed(scrollSpeed)
 {
     texture = LoadTexture(textureFilePath);
     pos.y = yPos;
@@ -11,7 +11,7 @@ Background::~Background()
     UnloadTexture(texture);
 }
 
-void Background::tick(float deltaTime)
+void Background::tick(const float& deltaTime)
 {
     pos.x -= speed * deltaTime;
 

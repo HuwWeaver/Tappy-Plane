@@ -8,7 +8,7 @@ class Background
 public:
     Background(const char *textureFilePath, float scrollSpeed, float yPos = 0.0f);
     ~Background();
-    virtual void tick(float deltaTime);
+    virtual void tick(const float& deltaTime);
 
 protected:
     Texture2D texture{};

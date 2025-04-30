@@ -177,7 +177,7 @@ int main()
                 if(collectible.GetActive()) collectible.tick(dt);
             }
             
-            collectionEffectEmitter.tick();
+            collectionEffectEmitter.tick(dt);
 
             //tick all active obstacles - update position and collisions
             for (auto& obstacle : obstaclePool)
@@ -185,7 +185,7 @@ int main()
                 if(obstacle->GetActive()) obstacle->tick(dt);            
             }
 
-            character.tick(dt, windowDimensions.y);
+            character.tick(dt);
 
             // ##########################################
             // ########## COLLISION CHECKS ##############
@@ -207,7 +207,7 @@ int main()
             }
 
             //Check if character has hit the floor
-            if(character.OutOfBounds(windowDimensions.y))
+            if(character.OutOfBounds())
             {
                 gameOver = true;
                 gameOverPanel.SetValues(timeScore, obstacleScore, collectibleScore);

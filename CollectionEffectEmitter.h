@@ -7,14 +7,13 @@
 class CollectionEffectEmitter
 {
 public:
-    CollectionEffectEmitter(Texture2D sprite);
-    void SpawnParticles(Vector2 newPos);
-    void tick();
+    CollectionEffectEmitter(const Texture2D& sprite);
+    void SpawnParticles(const Vector2& pos);
+    void tick(const float& deltaTime);
     void Reset();
 
 private:
-    CollectionEffectParticle particlePool[5]; 
-    Vector2 pos{};
+    CollectionEffectParticle particlePool[5];
 };
 
 #endif

@@ -2,12 +2,12 @@
 #include "raymath.h"
 #include <raymath.h>
 
-void CollectionEffectParticle::Init(Texture2D sprite)
+void CollectionEffectParticle::Init(const Texture2D& sprite)
 {
-    texture = sprite;
+    texture = &sprite;
 }
 
-void CollectionEffectParticle::Spawn(Vector2 startPos)
+void CollectionEffectParticle::Spawn(const Vector2& startPos)
 {
     active = true;
     lifetime = GetRandomValue(5, 8)/10.0f;
@@ -18,22 +18,21 @@ void CollectionEffectParticle::Spawn(Vector2 startPos)
     scale = GetRandomValue(2, 4)/10.0f;
 }
 
-void CollectionEffectParticle::tick()
+void CollectionEffectParticle::tick(const float& deltaTime)
 {
-    float dt = GetFrameTime();
-    lifetime -= dt;
+    lifetime -= deltaTime;
 
     if(lifetime > 0 && active)
     {
-        yVelocity += gravity * dt;
+        yVelocity += gravity * deltaTime;
 
-        pos.y += yVelocity * dt;
-        pos.x += xVelocity * dt;
+        pos.y += yVelocity * deltaTime;
+        pos.x += xVelocity * deltaTime;
 
-        DrawTexturePro(texture, 
-        {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)}, 
-        {pos.x, pos.y, texture.width * scale, texture.height * scale},  
-        {(texture.width * scale)/2.0f, (texture.height * scale)/2.0f},
+        DrawTexturePro(*texture, 
+        {0, 0, static_cast<float>(texture->width), static_cast<float>(texture->height)}, 
+        {pos.x, pos.y, texture->width * scale, texture->height * scale},  
+        {(texture->width * scale)/2.0f, (texture->height * scale)/2.0f},
         rotation,
         WHITE);
     }

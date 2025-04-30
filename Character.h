@@ -8,10 +8,10 @@
 class Character
 {
 public:
-    Character(Vector2 winSize);
+    Character(const Vector2& winSize);
     ~Character();
-    bool OutOfBounds(int winHeight);
-    void tick(float deltaTime, int winHeight);
+    bool OutOfBounds();
+    void tick(const float& deltaTime);
     Circle GetCollisionCircle() {return collisionCircle;};
     void Reset();
     Vector2 GetPosition(){return pos;};
@@ -20,7 +20,8 @@ protected:
     Texture2D texture{}, smokePuffTexture{};
     Sound jumpSFX{};
     Rectangle spriteRect{};
-    Vector2 pos{}, windowDimensions{};
+    Vector2 pos{};
+    const Vector2* windowDimensions{};
     Circle collisionCircle{};
 
     int frame{0};

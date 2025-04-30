@@ -2,12 +2,12 @@
 
 SmokePuff::SmokePuff(){}
 
-void SmokePuff::Init(Texture2D sprite)
+void SmokePuff::Init(const Texture2D& sprite)
 {
-    texture = sprite;
+    texture = &sprite;
 }
 
-void SmokePuff::Activate(Vector2 newPos)
+void SmokePuff::Activate(const Vector2& newPos)
 {
     pos = newPos;
     active = true;
@@ -19,7 +19,7 @@ void SmokePuff::Reset()
     colorLerpFactor = 1.0;
 }
 
-void SmokePuff::tick(float deltaTime)
+void SmokePuff::tick(const float& deltaTime)
 {
     if(active)
     {
@@ -30,6 +30,6 @@ void SmokePuff::tick(float deltaTime)
         colorLerpFactor -= fadeSpeed * deltaTime;
         if (colorLerpFactor <= 0) colorLerpFactor = 0;
 
-        DrawTextureV(texture, pos, ColorLerp(BLANK, GRAY, colorLerpFactor));
+        DrawTextureV(*texture, pos, ColorLerp(BLANK, GRAY, colorLerpFactor));
     }
 }

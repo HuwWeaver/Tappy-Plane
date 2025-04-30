@@ -1,6 +1,6 @@
 #include "CollectionEffectEmitter.h"
 
-CollectionEffectEmitter::CollectionEffectEmitter(Texture2D sprite)
+CollectionEffectEmitter::CollectionEffectEmitter(const Texture2D& sprite)
 {
     for (auto& particle : particlePool)
     {
@@ -8,21 +8,19 @@ CollectionEffectEmitter::CollectionEffectEmitter(Texture2D sprite)
     }
 };
 
-void CollectionEffectEmitter::SpawnParticles(Vector2 newPos)
+void CollectionEffectEmitter::SpawnParticles(const Vector2& pos)
 {
-    pos = newPos;
-
     for (auto& particle : particlePool)
     {
         particle.Spawn(pos);
     }
 }
 
-void CollectionEffectEmitter::tick()
+void CollectionEffectEmitter::tick(const float& deltaTime)
 {
     for (auto& particle : particlePool)
     {
-        particle.tick();
+        particle.tick(deltaTime);
     }
     
     //DEBUG CIRCLE

@@ -2,12 +2,12 @@
 
 Obstacle::Obstacle(){}
 
-void Obstacle::Init(Texture2D sprite, Vector2 winSize)
+void Obstacle::Init(const Texture2D& sprite, const Vector2& winSize)
 {
     //Assign texture
-    texture = sprite;
+    texture = &sprite;
     
-    windowDimensions = winSize;
+    windowDimensions = &winSize;
 
     //Set Initial Position
     ResetPosition();
@@ -26,7 +26,7 @@ void Obstacle::Reset()
     ResetPosition();
 }
 
-void Obstacle::tick(float deltaTime)
+void Obstacle::tick(const float& deltaTime)
 {
     if(active)
     {
@@ -37,10 +37,10 @@ void Obstacle::tick(float deltaTime)
 
 void Obstacle::ResetPosition()
 {
-    pos.x = windowDimensions.x + 200;
+    pos.x = windowDimensions->x + 200;
 }
 
-bool Obstacle::hasPassedChar(float charXPos)
+bool Obstacle::hasPassedChar(const float& charXPos)
 {
     if(!scoreAdded && charXPos > pos.x)
     {

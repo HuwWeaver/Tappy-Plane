@@ -6,17 +6,17 @@
 class CollectionEffectParticle
 {
 public:
-    void Init(Texture2D sprite);
-    void tick();
-    void Spawn(Vector2 startPos);
+    void Init(const Texture2D& sprite);
+    void tick(const float& deltaTime);
+    void Spawn(const Vector2& startPos);
     void Reset() {active = false;};
 
 private:
-    Texture2D texture{};
+    const Texture2D* texture{};
     bool active{false};
     Vector2 pos{};
     float xVelocity{}, yVelocity{};
-    const int gravity{500}, xDrag{300};
+    const int gravity{500};
     float lifetime{3.0}, rotation{0}, scale{0.3};
 };
 

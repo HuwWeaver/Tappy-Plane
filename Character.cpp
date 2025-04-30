@@ -1,12 +1,12 @@
 #include "Character.h"
 
-Character::Character(Vector2 winSize)
+Character::Character(const Vector2& winSize)
 {
-    windowDimensions = winSize;
+    windowDimensions = &winSize;
     
     texture = LoadTexture("textures/Planes/planeRedSpriteSheet.png");
     spriteRect = {0, 0, texture.width/4.0f, texture.height/1.0f};   
-    pos = {windowDimensions.x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions.y/3.0f};
+    pos = {windowDimensions->x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions->y/3.0f};
     collisionCircle = {{pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f}, 35};
 
     jumpSFX = LoadSound("sfx/Jump.wav");
@@ -27,9 +27,9 @@ Character::~Character()
     UnloadTexture(smokePuffTexture);
 }
 
-bool Character::OutOfBounds(int winHeight)
+bool Character::OutOfBounds()
 {
-    if(pos.y >= winHeight - spriteRect.height) return true;
+    if(pos.y >= windowDimensions->y - spriteRect.height) return true;
     if(pos.y <= -10) return true;
     
     return false;
@@ -42,12 +42,12 @@ void Character::Reset()
         puff.Reset();
     }
     
-    pos = {windowDimensions.x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions.y/3.0f};
+    pos = {windowDimensions->x/4.0f - (texture.width/4.0f)/2.0f, windowDimensions->y/3.0f};
     collisionCircle.pos = {pos.x + spriteRect.width/2.0f, pos.y + spriteRect.height/2.0f};
     yVelocity = 0;
 }
 
-void Character::tick(float deltaTime, int winHeight)
+void Character::tick(const float& deltaTime)
 {
     //In the air - Apply Gravity
     yVelocity += gravity * deltaTime;

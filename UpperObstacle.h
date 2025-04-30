@@ -8,7 +8,7 @@ class UpperObstacle : public Obstacle
 public:
     UpperObstacle();
     virtual void ResetPosition() override;
-    virtual void tick(float deltaTime) override;
+    virtual void tick(const float& deltaTime) override;
 };
 
 #endif

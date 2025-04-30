@@ -8,8 +8,8 @@ class Collectible
 {
 public:
     Collectible();
-    void Init(Texture2D sprite, Sound sfx, Vector2 winSize);
-    void tick(float deltaTime);
+    void Init(const Texture2D& sprite, const Sound& sfx, const Vector2& winSize);
+    void tick(const float& deltaTime);
     Circle GetCollisionCircle() {return collisionCircle;};
     Vector2 GetPosition() {return pos;};
     bool GetActive() {return active;};
@@ -18,9 +18,10 @@ public:
     void Reset();
 
 protected:
-    Texture2D texture{};
-    Sound collectionSFX{};
-    Vector2 pos{}, windowDimensions{};
+    const Texture2D* texture{};
+    const Sound* collectionSFX{};
+    Vector2 pos{};
+    const Vector2* windowDimensions{};
     Circle collisionCircle{};
 
     float speed{200}, rotation{0.0}, rotationSpeed{50};
